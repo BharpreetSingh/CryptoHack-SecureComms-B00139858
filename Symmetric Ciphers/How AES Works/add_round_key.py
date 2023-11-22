@@ -12,13 +12,22 @@ round_key = [
     [253, 48, 187, 78],
 ]
 
+def matrix2bytes(matrix):
+    """ Converts a 4x4 matrix into a 16-byte array.  """
+    return bytes(sum(matrix, []))
 
 def add_round_key(s, k):
-    
-    s[x][y] = s[x][y] ^ k[x][y]
+    # Goes through each element of the state matrix and XOR it with the corresponding element of the round key matrix
+    for x in range(4):
+        for y in range(4):
+            s[x][y] = s[x][y] ^ k[x][y]
 
-    return
+    return s
 
+# Call the add_round_key function and then use matrix2bytes to convert the result to a 16-byte array
+result_matrix = add_round_key(state, round_key)
+result_bytes = matrix2bytes(result_matrix)
 
-print(add_round_key(state, round_key))
+# Print the result
+print(result_bytes)
 
